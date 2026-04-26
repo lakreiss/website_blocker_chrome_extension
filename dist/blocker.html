@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Focus Check</title>
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+      background-color: #f4f4f9;
+      color: #333;
+    }
+    .card {
+      background: white;
+      padding: 2rem;
+      border-radius: 12px;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+      text-align: center;
+      max-width: 400px;
+    }
+    h1 { color: #d9534f; }
+    #stat-message {
+      font-weight: bold;
+      margin: 1rem 0;
+      color: #555;
+    }
+    #game-container {
+      margin-top: 2rem;
+      padding-top: 1rem;
+      border-top: 1px solid #eee;
+    }
+    button {
+      background-color: #5cb85c;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 1rem;
+    }
+    button:hover { background-color: #4cae4c; }
+  </style>
+</head>
+<body>
+
+  <div class="card">
+    <h1>Stop!</h1>
+    <p>You're trying to visit a blocked site.</p>
+    
+    <div id="stat-message">Gathering data...</div>
+
+    <div id="game-container">
+      <p>Prove you're focused to continue:</p>
+      <button id="win-game">I finished the challenge</button>
+    </div>
+  </div>
+
+  <script type="module" src="blocker.js"></script>
+</body>
+</html>

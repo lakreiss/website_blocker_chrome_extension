@@ -1,0 +1,27 @@
+{
+  "name": "website_blocker",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "tsc && cp manifest.json src/blocker.html src/popup.html dist/",
+    "watch": "tsc --watch",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lakreiss/website_blocker_chrome_extension.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/lakreiss/website_blocker_chrome_extension/issues"
+  },
+  "homepage": "https://github.com/lakreiss/website_blocker_chrome_extension#readme",
+  "devDependencies": {
+    "@types/chrome": "^0.1.40",
+    "typescript": "^6.0.3"
+  }
+}
