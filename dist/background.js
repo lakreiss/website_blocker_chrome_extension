@@ -1,3 +1,4 @@
+import { isMainDomainMatch } from "./utils.js";
 chrome.tabs.onUpdated.addListener(async (tabId, changeInfo, tab) => {
     if (changeInfo.url && !changeInfo.url.includes(chrome.runtime.id)) {
         const url = new URL(changeInfo.url);
@@ -5,7 +6,7 @@ chrome.tabs.onUpdated.addListener(async (tabId, changeInfo, tab) => {
         const data = await chrome.storage.local.get(["blockedSites", "lastUnlocked"]);
         const blockedSites = data.blockedSites || [];
         const lastUnlocked = data.lastUnlocked || {};
-        const isBlocked = blockedSites.some(s => s.hostname === url.hostname);
+        const isBlocked = blockedSites.some(s => isMainDomainMatch(s.hostname, url.hostname));
         // Check if they have a valid lease (e.g., 5 minutes)
         const unlockTime = lastUnlocked[url.hostname] || 0;
         const fiveMinutes = 5 * 60 * 1000;
@@ -33,5 +34,4 @@ async function updateVisitCount(hostname) {
     stats[hostname].push(now);
     await chrome.storage.local.set({ stats });
 }
-export {};
 //# sourceMappingURL=background.js.map

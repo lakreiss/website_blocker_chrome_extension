@@ -1,16 +1,16 @@
-import type { BlockedSite } from "./types";
-import type types = require("./types");
+import type { BlockedSite, LocalStorageData, SiteStats } from "./types.js"; // Note the .js extension
+import { isMainDomainMatch } from "./utils.js";
 
 chrome.tabs.onUpdated.addListener(async (tabId, changeInfo, tab) => {
   if (changeInfo.url && !changeInfo.url.includes(chrome.runtime.id)) {
     const url = new URL(changeInfo.url);
     
     // Pull both the blocklist and the unlock timestamps
-    const data = await chrome.storage.local.get(["blockedSites", "lastUnlocked"]) as types.LocalStorageData;
+    const data = await chrome.storage.local.get(["blockedSites", "lastUnlocked"]) as LocalStorageData;
     const blockedSites: BlockedSite[] = data.blockedSites || [];
     const lastUnlocked = data.lastUnlocked || {};
 
-    const isBlocked = blockedSites.some(s => s.hostname === url.hostname);
+    const isBlocked = blockedSites.some(s => isMainDomainMatch(s.hostname, url.hostname));
     
     // Check if they have a valid lease (e.g., 5 minutes)
     const unlockTime = lastUnlocked[url.hostname] || 0;
@@ -32,8 +32,8 @@ async function updateVisitCount(hostname: string): Promise<void> {
   const now = Date.now();
   const dayInMs = 24 * 60 * 60 * 1000;
   
-  const data = await chrome.storage.local.get("stats") as types.LocalStorageData;
-  let stats: types.SiteStats = data.stats || {};
+  const data = await chrome.storage.local.get("stats") as LocalStorageData;
+  let stats: SiteStats = data.stats || {};
 
   if (!stats[hostname]) {
     stats[hostname] = [];

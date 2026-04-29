@@ -1,3 +1,4 @@
+import { isMainDomainMatch } from "./utils.js";
 // src/popup.ts
 const input = document.getElementById('site-input');
 const saveBtn = document.getElementById('save-btn');
@@ -23,7 +24,7 @@ async function addSite() {
     if (newSite) {
         const data = await chrome.storage.local.get("blockedSites");
         const sites = data.blockedSites || [];
-        if (!sites.some(site => site.hostname === newSite)) {
+        if (!sites.some(site => isMainDomainMatch(site.hostname, newSite))) {
             sites.push({ hostname: newSite });
             await chrome.storage.local.set({ blockedSites: sites });
             input.value = "";
@@ -40,5 +41,4 @@ async function removeSite(index) {
 }
 saveBtn.addEventListener('click', addSite);
 updateList();
-export {};
 //# sourceMappingURL=popup.js.map
