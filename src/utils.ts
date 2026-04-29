@@ -1,3 +1,5 @@
+import type { BlockedSite, LocalStorageData } from "./types.js";
+
 export function isMainDomainMatch(urlA: string, urlB: string): boolean {
   const getDomainLabel = (input: string): string => {
     try {
@@ -31,4 +33,18 @@ export function isMainDomainMatch(urlA: string, urlB: string): boolean {
   const domain2 = getDomainLabel(urlB);
 
   return domain1 !== "" && domain1 === domain2;
+}
+
+export function findBlockedSite(blockedSites: BlockedSite[], hostname: string): BlockedSite | undefined {
+  return blockedSites.find((site) => isMainDomainMatch(site.hostname, hostname));
+}
+
+export function normalizeBlockedSites(data: LocalStorageData): BlockedSite[] {
+  const blockedSites = data.blockedSites || [];
+
+  return blockedSites.map((site) => ({
+    hostname: site.hostname,
+    lastUnlocked: site.lastUnlocked ?? 0,
+    siteStats: site.siteStats ?? [],
+  }));
 }

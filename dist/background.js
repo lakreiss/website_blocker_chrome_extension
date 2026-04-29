@@ -1,14 +1,14 @@
-import { isMainDomainMatch } from "./utils.js";
+import { findBlockedSite, isMainDomainMatch, normalizeBlockedSites } from "./utils.js";
 chrome.tabs.onUpdated.addListener(async (tabId, changeInfo, tab) => {
     if (changeInfo.url && !changeInfo.url.includes(chrome.runtime.id)) {
         const url = new URL(changeInfo.url);
         // Pull both the blocklist and the unlock timestamps
-        const data = await chrome.storage.local.get(["blockedSites", "lastUnlocked"]);
-        const blockedSites = data.blockedSites || [];
-        const lastUnlocked = data.lastUnlocked || {};
+        const data = await chrome.storage.local.get("blockedSites");
+        const blockedSites = normalizeBlockedSites(data);
         const isBlocked = blockedSites.some(s => isMainDomainMatch(s.hostname, url.hostname));
         // Check if they have a valid lease (e.g., 5 minutes)
-        const unlockTime = lastUnlocked[url.hostname] || 0;
+        const blockedSite = findBlockedSite(blockedSites, url.hostname);
+        const unlockTime = blockedSite?.lastUnlocked || 0;
         const fiveMinutes = 5 * 60 * 1000;
         const isLeaseValid = (Date.now() - unlockTime) < fiveMinutes;
         // ONLY redirect if it's blocked AND they don't have a valid lease
@@ -24,14 +24,17 @@ chrome.tabs.onUpdated.addListener(async (tabId, changeInfo, tab) => {
 async function updateVisitCount(hostname) {
     const now = Date.now();
     const dayInMs = 24 * 60 * 60 * 1000;
-    const data = await chrome.storage.local.get("stats");
-    let stats = data.stats || {};
-    if (!stats[hostname]) {
-        stats[hostname] = [];
+    const data = await chrome.storage.local.get("blockedSites");
+    const blockedSites = normalizeBlockedSites(data);
+    const blockedSite = findBlockedSite(blockedSites, hostname);
+    if (!blockedSite) {
+        return;
     }
     // Filter for the last 24 hours
-    stats[hostname] = stats[hostname].filter(time => now - time < dayInMs);
-    stats[hostname].push(now);
-    await chrome.storage.local.set({ stats });
+    const siteStats = blockedSite.siteStats || [];
+    blockedSite.siteStats = siteStats.filter(time => now - time < dayInMs);
+    blockedSite.siteStats.push(now);
+    await chrome.storage.local.set({ blockedSites });
 }
+console.log('Background script finishes loading');
 //# sourceMappingURL=background.js.map

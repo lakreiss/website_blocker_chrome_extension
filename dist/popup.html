@@ -6,8 +6,61 @@
     input { width: 100%; padding: 8px; box-sizing: border-box; margin-bottom: 10px; }
     button { width: 100%; cursor: pointer; padding: 8px; background: #007bff; color: white; border: none; border-radius: 4px; }
     ul { list-style: none; padding: 0; margin-top: 15px; }
-    li { display: flex; justify-content: space-between; padding: 5px 0; border-bottom: 1px solid #eee; font-size: 14px; }
-    .delete-btn { color: red; cursor: pointer; font-weight: bold; }
+    li {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 8px 0;
+      border-bottom: 1px solid #eee;
+    }
+    .delete-btn {
+      width: 30px;
+      min-width: 30px;
+      height: 30px;
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-size: 14px; /* Slightly smaller for the ❌ emoji */
+      color: #888;
+      border-radius: 4px;
+      transition: all 0.2s;
+      user-select: none;
+      color: #d9534f;           /* Brighter red for the X */
+    }
+
+    .delete-btn:hover {
+      background-color: #ffe5e5; /* Soft red background on hover */
+    }
+    .status-btn {
+      width: 30px;
+      min-width: 30px; /* Ensures it stays 30px */
+      height: 30px;
+      flex-shrink: 0;   /* Prevents the button from collapsing */
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: none;
+      background: none;
+      cursor: pointer;
+      font-size: 16px;
+      margin-right: 10px;
+      padding: 0;
+      border-radius: 4px;
+    }
+    .status-btn:hover {
+      background: #f0f0f0;
+    }
+    .status-btn.locked:hover {
+      background-color: #fcf8e3; /* Light yellow/gold hint */
+      color: #8a6d3b;
+    }
+    .status-btn.unlocked:hover {
+      background-color: #dff0d8; /* Light green hint */
+    }
+    .locked { color: #d9534f; }   /* Red */
+    .unlocked { color: #5cb85c; } /* Green */
   </style>
 </head>
 <body>

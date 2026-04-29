@@ -27,4 +27,15 @@ export function isMainDomainMatch(urlA, urlB) {
     const domain2 = getDomainLabel(urlB);
     return domain1 !== "" && domain1 === domain2;
 }
+export function findBlockedSite(blockedSites, hostname) {
+    return blockedSites.find((site) => isMainDomainMatch(site.hostname, hostname));
+}
+export function normalizeBlockedSites(data) {
+    const blockedSites = data.blockedSites || [];
+    return blockedSites.map((site) => ({
+        hostname: site.hostname,
+        lastUnlocked: site.lastUnlocked ?? 0,
+        siteStats: site.siteStats ?? [],
+    }));
+}
 //# sourceMappingURL=utils.js.map

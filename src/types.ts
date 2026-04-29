@@ -1,13 +1,9 @@
-export interface SiteStats {
-  [hostname: string]: number[];
-}
-
 export interface BlockedSite {
   hostname: string;
+  lastUnlocked?: number;
+  siteStats?: number[];
 }
 
 export interface LocalStorageData {
   blockedSites?: BlockedSite[];
-  stats?: SiteStats;
-  lastUnlocked?: { [hostname: string]: number };
 }

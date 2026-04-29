@@ -45,19 +45,53 @@
       font-size: 1rem;
     }
     button:hover { background-color: #4cae4c; }
+    #win-game {
+        width: 100%;
+        padding: 12px;
+        font-size: 16px;
+        font-weight: bold;
+        border: none;
+        border-radius: 8px;
+        background-color: #ccc;
+        color: #666;
+        transition: all 0.3s ease;
+        margin-top:8px;
+    }
+
+    /* This class gets added via JS once the puzzle is won */
+    #win-game.btn-active {
+      cursor: pointer;
+      background-color: #27ae60;
+      color: white;
+      box-shadow: 0 4px 15px rgba(39, 174, 96, 0.3);
+    }
+
+    #win-game.btn-active:hover {
+      background-color: #2ecc71;
+      transform: translateY(-2px);
+    }
+    /* Add to your blocker CSS */
+    .puzzle-tile {
+      transition: transform 0.1s ease, background-color 0.2s;
+    }
+
+    .puzzle-tile:active {
+      transform: scale(0.95);
+    }
   </style>
 </head>
 <body>
 
   <div class="card">
     <h1>Stop!</h1>
-    <p>You're trying to visit a blocked site.</p>
-    
-    <div id="stat-message">Gathering data...</div>
+    <div id="challenge-area">
+      <h2>Complete the Challenge</h2>
+      <p id="stat-message"></p>
+      
+      <div id="game-container" style="margin: 20px auto; width: fit-content;">
+        </div>
 
-    <div id="game-container">
-      <p>Prove you're focused to continue:</p>
-      <button id="win-game">I finished the challenge</button>
+      <button id="win-game" disabled>Complete the puzzle to unlock</button>
     </div>
   </div>
 
