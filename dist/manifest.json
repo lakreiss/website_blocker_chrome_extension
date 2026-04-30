@@ -4,7 +4,7 @@
   "description": "A simple browser extension to help keep yourself from visiting websites that distract you.",
   "version": "0.1",
   "version_name": "0.1 Pilot Launch",
-  "permissions": ["declarativeNetRequest", "storage", "tabs"],
+  "permissions": ["storage", "tabs"],
   "host_permissions": ["<all_urls>"],
   "action": {
     "default_popup": "popup.html",
