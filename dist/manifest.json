@@ -4,6 +4,9 @@
   "description": "A simple browser extension to help keep yourself from visiting websites that distract you.",
   "version": "0.1",
   "version_name": "0.1 Pilot Launch",
+  "icons": {
+    "128": "img/logo/128x128.png"
+  },
   "permissions": ["storage", "tabs"],
   "host_permissions": ["<all_urls>"],
   "action": {

@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build": "tsc && cp manifest.json src/blocker.html src/popup.html dist/",
+    "build": "tsc && cp manifest.json src/blocker.html src/popup.html dist/ && cp -R img/logo dist/img",
     "watch": "tsc --watch",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
