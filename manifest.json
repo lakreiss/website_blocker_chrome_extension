@@ -2,8 +2,8 @@
   "manifest_version": 3,
   "name": "Ad-free Website Blocker",
   "description": "A simple browser extension to help keep yourself from visiting websites that distract you.",
-  "version": "0.1",
-  "version_name": "0.1 Pilot Launch",
+  "version": "0.1.1",
+  "version_name": "0.1.1 Pilot Launch with logo",
   "icons": {
     "128": "img/logo/128x128.png"
   },
